@@ -9,19 +9,19 @@ env:
   CI_CHECK_FAIL: ssh2
   OPENSSL_CONF: /dev/null
 
+permissions:
+  contents: read
+
 jobs:
   tests-linux:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         node-version: [10.16.0, 10.x, 12.x, 14.x, 16.x, 18.x, 20.x, 22.x]
     steps:
-      - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -46,17 +46,14 @@ jobs:
       - name: Run tests
         run: npm test
   tests-macos:
+    permissions:
+      contents: read
     runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
         node-version: [16.x, 18.x, 20.x, 22.x]
     steps:
-      - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -77,13 +74,10 @@ jobs:
       - name: Run tests
         run: npm test
   tests-macos-homebrew:
+    permissions:
+      contents: read
     runs-on: macos-latest
     steps:
-      - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -102,17 +96,14 @@ jobs:
       - name: Run tests
         run: npm test
   tests-windows:
+    permissions:
+      contents: read
     runs-on: windows-2019
     strategy:
       fail-fast: false
       matrix:
         node-version: [16.x, 18.x, 20.x, 22.x]
     steps:
-      - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
